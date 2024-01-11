@@ -7,39 +7,43 @@ using namespace std;
 
 class Solution {
 private:
-    int primeFactorPower(int n)
-    {
-        //cout<<n<<" ";
-        int k=3,m=n;
-        int d=0;
-        while(n%2==0)
+    void generatePrimes(vector<int>&primes,int b){
+        primes[0]=0;
+        primes[1]=1;
+        for(int i=0;i<=b;i++) primes[i]=i;
+        for(int i=2;i*i<=b+1;i++)
         {
-            n/=2;
-            d++;
-        }
-        while(n>1 and k<=int(sqrt(m))+1)
-        {
-            if(n%k==0)
+            if(primes[i]==i)
             {
-                d++;
-                n/=k;
-            }
-            else {
-                k+=2;
+                primes[i]=i;
+                for(int j=i*i;j<=b+1;j+=i)
+                {
+                    if(primes[j]==j)
+                        primes[j]=i;
+                }
             }
         }
-        if(n>2) d++;
-        //if(n==2) d++;
-        //cout<<d<<endl;
-        return d;
     }
 public:
 	int sumOfPowers(int a, int b){
 	    // Code here
+	    vector<int>primes(b+1,1);
+	    generatePrimes(primes,b);
 	    int ans=0;
 	    for(int i=a;i<=b;i++)
 	    {
-	        ans+=primeFactorPower(i);
+	        //map<int,int>mpp;
+	        int m=i,s=0;
+	        //cout<<"for "<<i<<endl;
+	        while(m>1){
+	            int p=primes[m];
+	            //cout<<p<<" ";
+	            s++;
+	            m/=p;
+	            //cout<<m<<" ";
+	        }
+	        //cout<<s<<" ";
+	        ans+=s;
 	    }
 	    return ans;
 	}
