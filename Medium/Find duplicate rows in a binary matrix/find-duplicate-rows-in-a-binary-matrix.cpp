@@ -8,18 +8,27 @@ using namespace std;
 class Solution
 {   
     public:
+    int mod=1e9+7;
     vector<int> repeatedRows(vector<vector<int>> &matrix, int M, int N) 
     { 
         // Your code here
         vector<int>a;
-        map<vector<int>,int>mpp;
+        map<int,int>mpp;
         for(int i=0;i<matrix.size();i++)
         {
-            vector<int>ans;
-            for(int j=0;j<matrix[0].size();j++)
+            int ans=0;
+            int c=0;
+            for(int j=matrix[0].size()-1;j>=0;j--)
             {
-                ans.push_back(matrix[i][j]);
+                int k=matrix[i][j];
+                if(k==1)
+                {
+                    ans+=(((2<<c)))%mod;
+                   // cout<<ans<<" ";
+                }
+                c++;
             }
+            ans=ans%mod;
             if(mpp.find(ans)==mpp.end()) mpp[ans]++;
             else a.push_back(i);
         }
