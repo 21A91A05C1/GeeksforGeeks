@@ -36,15 +36,16 @@ class Solution
         {
             int v=pre[i][0];
             int u=pre[i][1];
-            adj[v].push_back(u);
+            indeg[v]++;
+            adj[u].push_back(v);
         }
-        for(int i=0;i<n;i++)
-        {
-            for(auto it:adj[i])
-            {
-                indeg[it]++;
-            }
-        }
+        // for(int i=0;i<n;i++)
+        // {
+        //     for(auto it:adj[i])
+        //     {
+        //         indeg[it]++;
+        //     }
+        // }
         for(int i=0;i<n;i++)
         {
             if(indeg[i]==0) qu.push(i);
@@ -56,7 +57,7 @@ class Solution
         //     cout<<it<<" ";
         // }
         if(ans.size() != n) return {};
-        reverse(ans.begin(),ans.end());
+        //reverse(ans.begin(),ans.end());
         return ans;
         
     }
