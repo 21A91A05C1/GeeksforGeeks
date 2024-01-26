@@ -116,46 +116,46 @@ struct Node {
 int intersectPoint(Node* head1, Node* head2)
 {
     // Your Code Here
-    int c1=0;
-    int c2=0;
-    Node* temp1=head1;
-    Node* temp2=head2;
-    while(temp1)
+    Node* t1=head1;
+    Node* t2=head2;
+    int c=0,d=0;
+    //return 0;
+    while(t1 and t2)
     {
-        c1++;
-        temp1=temp1->next;
-    }
-    while(temp2)
-    {
-        c2++;
-        temp2=temp2->next;
-    }
-    int skip=abs(c2-c1);
-    Node* h1=head1;
-    Node* h2=head2;
-    if(c2>c1)
-    {
-        while(skip--)
+        if(t1->next==NULL and t2->next==NULL) return -1;
+        if(t1==t2) return t2->data;
+        
+        if(t1->next) t1=t1->next;
+        else 
         {
-            h2=h2->next;
+            if(c==0)
+            {
+                t1=head2;
+                c=1;
+            }
+            else
+            {
+                t1=head1;
+                c=0;
+            }
         }
-    }
-    else
-    {
-        while(skip--)
+        if(t2->next) t2=t2->next;
+        else
         {
-            h1=h1->next;
+            if(d==0)
+            {
+                t2=head1;
+                d=1;
+            }
+            else
+            {
+                t2=head2;
+                d=0;
+            }
         }
-    }
-    while(h1!=NULL && h2!=NULL)
-    {
-        if(h1==h2) return h1->data;
-        h1=h1->next;
-        h2=h2->next;
+        
     }
     return -1;
-    
-    
     
 }
 
