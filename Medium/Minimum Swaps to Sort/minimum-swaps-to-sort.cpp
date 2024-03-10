@@ -27,7 +27,9 @@ class Solution
 	            swap(arr[i],arr[k]);
 	            k=arr[i].second;
 	            ans++;
+	           // cout<<"hi ";
 	        }
+	       // cout<<endl;
 	    }
 	    return ans;
 	}
