@@ -6,55 +6,60 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
   public:
-    long long merge(long long low,long long  mid,long long high,long long arr[])
+    // arr[]: Input Array
+    // N : Size of the Array arr[]
+    // Function to count inversions in the array.
+    long long merge(long long arr[],long long low,long long mid,long long high)
     {
-        long long  i=low,k=low,d=0,j=mid+1;
+        long long d=0;
         vector<long long>temp;
-        while(i<=mid && j<=high)
+        int l=low,m=mid+1;
+        // int i=0;
+        while(l<=mid and m<=high)
         {
-            if(arr[i]<=arr[j]) 
-            {
-                temp.push_back(arr[i]);
-                i++;
+            if(arr[l]<=arr[m]){
+                temp.push_back(arr[l++]);
             }
-            else
-            {
-                temp.push_back(arr[j]);
-                j++;
-                d+=(mid-i+1);
+            else{
+                d+=(mid-l+1);
+                temp.push_back(arr[m++]);
+                
             }
         }
-        while(i<=mid)
-        {
-            temp.push_back(arr[i]);
-            i++;
+        while(l<=mid){
+            temp.push_back(arr[l++]);
         }
-        while(j<=high)
-        {
-            temp.push_back(arr[j]);
-            j++;
+        while(m<=high){
+            temp.push_back(arr[m++]);
         }
-        for(long long  i = 0; i<temp.size() ; i++)  arr[k++]=temp[i];
+        for(int i=0;i<temp.size();i++)
+        {
+            arr[low++]=temp[i];
+        }
         return d;
     }
-    long long mergesort(long long  low,long long high,long long arr[])
+    long long mergeSort(long long arr[],long long low,long long high)
     {
-        long long c=0;
-        if(low==high) return 0;
+        long long cnt=0;
+        if(low>=high) return 0;
         long long mid=(low+high)/2;
-        long long lid=(low+high)/2;
-        c+=mergesort(low,mid,arr);
-        c+=mergesort(mid+1,high,arr);
-        c+=merge(low,mid,high,arr);
-        return c;
+        cnt+=mergeSort(arr,low,mid);
+        cnt+=mergeSort(arr,mid+1,high);
+        cnt+=merge(arr,low,mid,high);
+        return cnt;
     }
-    long long int inversionCount(long long arr[], long long n)
+    long long int inversionCount(long long arr[], long long N)
     {
-        return mergesort(0,n-1,arr);
+        // Your Code Here
+        return mergeSort(arr,0,N-1);
+        // for(long long i=0;i<N;i++)
+        // {
+        //     cout<<arr[i]<<" ";
+        // }
+        // return 0;
     }
 
 };
-
 
 //{ Driver Code Starts.
 
