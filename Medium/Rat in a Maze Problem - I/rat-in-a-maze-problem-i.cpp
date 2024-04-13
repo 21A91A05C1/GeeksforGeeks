@@ -10,60 +10,51 @@ using namespace std;
 
 class Solution{
     public:
-    vector<string>ans;
-    void findDirection(vector<vector<int>>&arr,int n,int i,int j,string &temp,
-    vector<vector<int>>&vis)
+    void checkAllPossibleWays(vector<vector<int>>&maze,int n,vector<string>&ans,string s,int i,int j
+    ,vector<vector<int>>&vis)
     {
-        //cout<<"ji ";
-        if(i>=n or j>=n or i<0 or j<0 or vis[i][j]==1 or arr[i][j]==0) return;
-        if(i==n-1 and j==n-1)
-        {
-            //cout<<temp<<" ";
-            ans.push_back(temp);
-            return;
+        if(i<0 or j<0 or i>=n or j>=n or maze[i][j]==0) return ;
+        if(i==n-1 and j==n-1){
+            ans.push_back(s);
+            return ;
         }
-        temp+='D';
-        vis[i][j]=1;
-        findDirection(arr,n,i+1,j,temp,vis);
-        vis[i][j]=-1;
-        temp.pop_back();
-        temp+='R';
-        vis[i][j]=1;
-        findDirection(arr,n,i,j+1,temp,vis);
-        vis[i][j]=-1;
-        temp.pop_back();
-        temp+='L';
-        vis[i][j]=1;
-        findDirection(arr,n,i,j-1,temp,vis);
-        vis[i][j]=-1;
-        temp.pop_back();
-        temp+='U';
-        vis[i][j]=1;
-        findDirection(arr,n,i-1,j,temp,vis);
-        vis[i][j]=-1;
-        temp.pop_back();
-        // vis[i][j] = 1;
-        // findDirection(arr,n,i-1,j,temp+'U',vis);
-        // findDirection(arr,n,i+1,j,temp+'D',vis);
-        // findDirection(arr,n,i,j-1,temp+'L',vis);
-        // findDirection(arr,n,i,j+1,temp+'R',vis);
-        // vis[i][j] = -1;
         
-        
+        if(vis[i][j]==0){
+            vis[i][j]=1;  
+            checkAllPossibleWays(maze,n,ans,s+"D",i+1,j,vis);
+            // checkAllPossibleWays(maze,n,ans,s+"U",i-1,j,vis);
+            // checkAllPossibleWays(maze,n,ans,s+"R",i,j+1,vis);
+            vis[i][j]=0;  
+        }
+        if(vis[i][j]==0){
+            vis[i][j]=1;  
+            checkAllPossibleWays(maze,n,ans,s+"U",i-1,j,vis);
+            vis[i][j]=0;
+        }
+        if(vis[i][j]==0){
+            vis[i][j]=1;  
+            checkAllPossibleWays(maze,n,ans,s+"R",i,j+1,vis);
+            vis[i][j]=0;
+        }
+        if(vis[i][j]==0){
+            vis[i][j]=1;  
+            checkAllPossibleWays(maze,n,ans,s+"L",i,j-1,vis);
+            vis[i][j]=0;
+        }
+        return ;
     }
-    vector<string>findPath(vector<vector<int>> &m, int n) {
+    vector<string> findPath(vector<vector<int>> &m, int n) {
         // Your code goes here
-        //vector<string>ans;
-        vector<vector<int>>vis(n,vector<int>(n,-1));
-        string temp="";
-        findDirection(m,n,0,0,temp,vis);
-        
+        vector<string>ans;
+        vector<vector<int>>vis(n+1,vector<int>(n+1,0));
+        string s="";
+        // vis[0][0]=1;
+        checkAllPossibleWays(m,n,ans,s,0,0,vis);
         return ans;
     }
 };
 
     
-
 
 
 //{ Driver Code Starts.
