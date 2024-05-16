@@ -6,36 +6,34 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    int dfs(vector<int>adj[],vector<int>&vis,int i,int par)
-    {
-        vis[i]=1;
-        for(auto it:adj[i])
-        {
-            if(!vis[it]){
-                if(dfs(adj,vis,it,i)) return 1;
-            }
-            else{
-                if(it!=par){
-                    return 1;
-                }
-            }
-        }
-        return 0;
-    }
     bool isCycle(int V, vector<int> adj[]) {
         // Code here
         vector<int>vis(V+1,0);
         for(int i=0;i<V;i++)
         {
-            int k=0;
             if(!vis[i]){
-                k=dfs(adj,vis,i,-1);
-                if(k==1) return 1;
+                queue<pair<int,int>>qu;
+                qu.push({i,-1});
+                vis[i]=1;
+                while(!qu.empty())
+                {
+                    int itt=qu.front().first;
+                    int par=qu.front().second;
+                    qu.pop();
+                    for(auto it:adj[itt]){
+                        if(!vis[it]){
+                            qu.push({it,itt});
+                            vis[it]=1;
+                        }
+                        else {
+                            if(it!=par) return 1;
+                        }
+                    }
+                }
             }
         }
         return 0;
     }
-    // 1->2->3
 };
 
 //{ Driver Code Starts.
