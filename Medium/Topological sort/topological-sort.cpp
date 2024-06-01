@@ -7,13 +7,11 @@ class Solution
 {
 	public:
 	//Function to return list containing vertices in Topological order. 
-	void dfs(int i,vector<int>adj[],vector<bool>&vis,vector<int>&ans)
+	void dfs(int i,vector<int>adj[],vector<int>&vis,vector<int>&ans)
 	{
-	    vis[i]=true;
-	    for(auto it:adj[i])
-	    {
-	        if(!vis[it])
-	        {
+	    vis[i]=1;
+	    for(auto it:adj[i]){
+	        if(!vis[it]){
 	            dfs(it,adj,vis,ans);
 	        }
 	    }
@@ -23,11 +21,10 @@ class Solution
 	{
 	    // code here
 	    vector<int>ans;
-	    vector<bool>vis(V,false);
+	    vector<int>vis(V+1,0);
 	    for(int i=0;i<V;i++)
 	    {
-	        if(!vis[i])
-	        {
+	        if(!vis[i]){
 	            dfs(i,adj,vis,ans);
 	        }
 	    }
